@@ -1,4 +1,5 @@
 from flask import Flask
+import os
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -8,23 +9,15 @@ def create_app():
 
     app.config['SECRET_KEY'] = 'dingusdangus'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+    
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db.init_app(app)
 
-    from .views import views as views_blueprint
-    app.register_blueprint(views_blueprint)
-
     from .auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)
+    
+    from .main import main as main_blueprint
+    app.register_blueprint(main_blueprint)
 
     return app
-
-## Timin juttuja alla
-##def create_database(app):
-##    if not path.exists('website/' + DB_NAME):
-##        db.create_all(app=app)
-##        print('Created database')
-
-##from .models import User, Reseptit
-
-#create_database(app)

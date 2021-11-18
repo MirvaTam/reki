@@ -1,11 +1,16 @@
 from flask import Blueprint, render_template
+from . import db
 
-views = Blueprint('views', __name__)
+main = Blueprint('main', __name__)
 # defines that this file is a blueprint
 
-@views.route('/')
+@main.route('/')
 def index():
     return render_template('index.html')
+
+@main.route('/profile')
+def profile():
+    return render_template('profile.html')
 
 
 ## kaikki vanhat sivut app.route alla

@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS posts;
+
 
 CREATE TABLE posts (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -6,3 +6,4 @@ CREATE TABLE posts (
     title TEXT NOT NULL,
     content TEXT NOT NULL
 );
+
