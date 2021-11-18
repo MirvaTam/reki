@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %} Muokkaa reseptiä {% endblock %}
+{% block content %}
+<h1> Muokkaa reseptiä<br> "{{ post['title'] }}" </h1>
+
+<form method="post">
+    <div class="form-group">
+        <label for="title">Reseptin nimi</label>
+        <input type="text" name="title" placeholder="Reseptin nimi"
+               class="form-control"
+               value="{{ request.form['title'] or post['title'] }}">
+        </input>
+    </div>
+
+    <div class="form-group">
+        <label for="content">Ohje</label>
+        <textarea name="content" placeholder="Ohje"
+                  class="form-control">{{ request.form['content'] or post['content'] }}</textarea>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Tallenna</button>
+    </div>
+</form>
+<hr>
+<form action="{{ url_for('delete', id=post['id']) }}" method="POST">
+    <input type="submit" value="Poista resepti"
+            class="btn btn-danger btn-sm"
+            onclick="return confirm('Oletko varma, että haluat poistaa tämän herkun?')">
+</form>
+{% endblock %}
