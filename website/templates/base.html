@@ -26,7 +26,8 @@
   </head>
   <body>
     <nav class="navbar navbar-expand-md navbar-light bg-light">
-      <a class="navbar-brand" href="{{ url_for('index')}}">Reseptikirja</a>
+      <a class="navbar-brand" id="index" href="{{ url_for('index')}}"
+        >Reseptikirja</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -34,20 +35,30 @@
         data-target="#navbarNav"
         aria-controls="navbarNav"
         aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
+        aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-          <li class="nav-item active">
-            <!-- active useless? -->
-            <a class="nav-link" href="{{url_for('about')}}">Tekijästä</a>
+          <li class="nav-item">
+            <a class="nav-link" id="signup" href="{{url_for('sign_up')}}"
+              >Luo käyttäjä</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{url_for('create')}}"
-              >Luo uusi resepti</a
-            >
+            <a class="nav-link" id="login" href="{{url_for('login')}}"
+              >Kirjaudu</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="logout" href="{{url_for('logout')}}"
+              >Kirjaudu ulos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="create" href="{{url_for('create')}}"
+              >Luo uusi resepti</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="about" href="{{url_for('about')}}"
+              >Tekijästä</a>
           </li>
         </ul>
       </div>
