@@ -16,7 +16,6 @@
       crossorigin="anonymous"
     />
     <!-- Normal CSS -->
-    <!--link rel="stylesheet" href="static/css/style.css"/ tämä toimii mutta myös ao. toimii -->
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename= 'css/style.css') }}"
@@ -38,6 +37,7 @@
         aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           {% if not current_user.is_authenticated %}

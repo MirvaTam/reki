@@ -3,14 +3,21 @@ import os
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
-db = SQLAlchemy()
+db = SQLAlchemy() # init the db so we can use this object in our models
 
 def create_app():
     app = Flask(__name__) ## perustaa koko sovelluksen
 
+    ENV = 'dev'
+
+    if ENV == 'dev':
+        app.debug = True
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+    else:
+        app.debug = False
+        app.config['SQLALCHEMY_DATABASE_URI'] = '' #heroku
+
     app.config['SECRET_KEY'] = 'dingusdangus'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
-    
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db.init_app(app)
@@ -19,7 +26,7 @@ def create_app():
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
 
-    from .models import Users
+    from .models import Users, Reseptit, Feedback
 
     @login_manager.user_loader
     def load_user(user_id):

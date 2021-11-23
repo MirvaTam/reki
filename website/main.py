@@ -1,6 +1,7 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request, flash
 from flask_login import login_required, current_user
 from . import db
+from .models import Users, Reseptit
 
 main = Blueprint('main', __name__)
 # defines that this file is a blueprint
@@ -9,81 +10,32 @@ main = Blueprint('main', __name__)
 def index():
     return render_template('index.html')
 
-@main.route('/profile')
+
+@main.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
-    return render_template('profile.html', name=current_user.etunimi)
-
-
-## kaikki vanhat sivut app.route alla
-#@app.route('/')
-#def index():
-    conn = get_db_connection()
-    posts = conn.execute('SELECT * FROM posts').fetchall()
-    conn.close()
-    return render_template('index.html', posts=posts)
-    # You also pass the posts object as an argument, which contains the results you got from the database, 
-    # this will allow you to access the blog posts in the index.html template.
-
-##  määrää about sivun
-#@app.route('/about')
-#def about():
-    return render_template('about.html')
-
-## yksittäiset id-sivut
-#@app.route('/<int:post_id>')
-#def post(post_id):
-    post = get_post(post_id)
-    return render_template('post.html', post=post)
-
-## luo uusi resepti sivu
-#@app.route('/create', methods=('GET', 'POST'))
-#def create():
     if request.method == 'POST':
-        title = request.form['title']
-        content = request.form['content']
+        resepti = request.form.get('resepti')
 
-        if not title:
-            flash('Reseptin nimi vaaditaan')
-        else:
-            conn = get_db_connection()
-            conn.execute(
-                'INSERT INTO posts (title, content) VALUES (?, ?)', (title, content))
-            conn.commit()
-            conn.close()
-            return redirect(url_for('index'))
+        new_resepti = Reseptit(data=resepti, user_id=current_user.id)
+        db.session.add(new_resepti)
+        db.session.commit()
+        flash('Resepti lisätty')
+   
+    return render_template('profile.html', user=current_user, name=current_user.etunimi)
 
-    return render_template('create.html')
-
-## muokkaa reseptiä sivu
-#@app.route('/<int:id>/edit', methods=('GET', 'POST'))
-#def edit(id):
-    post = get_post(id)
-
+@main.route('/feedback', methods=['POST'])
+def palaute():
     if request.method == 'POST':
-        title = request.form['title']
-        content = request.form['content']
-
-        if not title:
-            flash('Reseptin nimi tarvitaan')
-        else:
-            conn = get_db_connection()
-            conn.execute('UPDATE posts SET title = ?, content = ?'
-                         ' WHERE id = ?',
-                         (title, content, id))
-            conn.commit()
-            conn.close()
-            return redirect(url_for('index'))
-
-    return render_template('edit.html', post=post)
-
-## poista resepti sivu
-#@app.route('/<int:id>/delete', methods=('POST',))
-#def delete(id):
-    post = get_post(id)
-    conn = get_db_connection()
-    conn.execute('DELETE FROM posts WHERE id = ?', (id,))
-    conn.commit()
-    conn.close()
-    flash('"{}" onnistuneesti poistettu'.format(post['title']))
-    return redirect(url_for('index'))
+        email = request.form['email']
+        palaute = request.form['palaute']
+        if email == '' or palaute == '':
+            return render_template('index.html', message='Täytä vaadittavat kentät')
+        
+        #db.session.query(Feedback): #tarviiko, miten avataan tietokantayhteys??
+        #data = Feedback(email, palaute) #tietokantayhteys??
+        #db.session.add(data)
+        #db.session.commit()            
+        #todo send_mail(email, palaute)
+        flash('Kiitos palautteestasi!')
+        return render_template('index.html')

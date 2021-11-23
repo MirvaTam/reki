@@ -1,14 +1,31 @@
 {% extends 'base.html' %} {% block content %}
 <h1>{% block title %}Tervetuloa reseptikirjaan{% endblock %}</h1>
 <h2>Login systeemi</h2>
-<!--
-{% for post in posts %}
-<a href="{{ url_for('post', post_id=post['id']) }}">
-  <h2>{{ post['title'] }}</h2>
-</a>
-<span class="badge badge-info">{{ post['created']}}</span>
-<a href="{{ url_for('edit', id=post['id']) }}">
-  <span class="badge badge-secondary">Muokkaa reseptiä</span>
-</a>
-<hr />{% endfor %} -->
+<p>Etusivu, kerro jotain kivaa. Laita joku kuva.</p>
+
+<h3>Anna palautetta</h3>
+<form method="POST" action="/feedback">
+  <div class="form-group">
+    <label for="email">Email osoitteesi</label>
+    <input
+      type="email"
+      class="form-control"
+      id="email"
+      name="email"
+      placeholder="Syötä email-osoitteesi"
+    />
+  </div>
+  <div class="form-group">
+    <label for="palaute">Kirjoita palaute</label>
+    <textarea
+      type="palaute"
+      class="form-control"
+      id="palaute"
+      name="palaute"
+      placeholder="Kirjoita palautteesi"
+    ></textarea>
+  </div>
+  <br>
+  <button type="submit" class="btn btn-primary">Lähetä palaute</button>
+</form>
  {% endblock %}

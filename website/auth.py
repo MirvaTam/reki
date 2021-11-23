@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login.utils import login_required 
 from flask_login import login_user, logout_user, login_required
 from .models import Users
 from . import db
@@ -19,6 +18,7 @@ def login_post():
     remember = True if request.form.get('remember') else False
 
     user = Users.query.filter_by(email=email).first()
+
     # check if the user actually exists
     # take the user-supplied password, hash it, and compare it to the hashed password in the database
     if not user or not check_password_hash(user.password, password):
@@ -47,7 +47,7 @@ def sign_up_post():
 
     user = Users.query.filter_by(email=email).first()
 
-    if user: # if a user is found, we want to redirect back to signup page so user can try again
+    if user: # if a user is found, we want to redirect to login /or sigup/
         flash('Email on jo olemassa. Kirjaudu tästä sisään.')
         return redirect(url_for('auth.login'))
     
