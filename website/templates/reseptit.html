@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}  Reseptit  {% endblock %}
+{% block content %}
+<h1 class="title">
+  Tervetuloa {{ name }}! <br> Tässä sinun reseptikokoelmasi:
+</h1>
+
+<div class="container bg-dark text-white">
+<p></p><h3>Lisää uusi resepti</h3>
+
+   <form method="post" action="/profile">
+       <div class="form-group">
+           <label for="title"></label>
+           <input type="text" name="title"
+                  placeholder="Reseptin nimi" class="form-control"
+                  value="{{ request.form['title'] }}"></input>
+       </div>
+   
+       <div class="form-group">
+           <label for="content"></label>
+           <input type="text" name="content" placeholder="Reseptin linkki"
+                     class="form-control" value="{{ request.form['content'] }}"></input>
+       </div>
+       <div class="form-group">
+        <label for="comment"></label>
+        <textarea name="comment" placeholder="Oma kommentti reseptiin"
+                  class="form-control">{{ request.form['comment'] }}</textarea>
+    </div>
+       <div class="form-group">
+           <button type="submit" class="btn btn-info">Lisää Resepti</button>
+       </div>
+       <label></label>
+      </form>
+    </div>
+  
+
+   <div class="container">
+   <h2>Omat Reseptit</h2>
+
+   <div class="container">
+   <ul class="list-group list-group-flush" id="reseptit">
+    {% for resepti in user.reseptit %}
+    <li class="list-group-item"><b>
+      {{ resepti.title }} </b>
+      <br>{{ resepti.comment }}<br>
+      <a href="{{ resepti.content }}" target="_blank">
+        <span class="badge badge-success">Avaa resepti välilehdelle</span>
+      </a>
+      <form action="/delete" method="POST">
+        <input type="hidden" name="id" value="{{ resepti.id }}"/>
+        <button type="submit" class="badge badge-secondary" onclick="return confirm('Oletko varma, että haluat poistaa {{ resepti.title }} reseptin kirjastasi?')">Poista resepti</button>
+        </form>
+      </a>
+    </li>
+    {% endfor %}
+    </ul>
+  </div></div>
+    
+{% endblock %}

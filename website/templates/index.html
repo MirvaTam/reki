@@ -1,0 +1,43 @@
+{% extends 'base.html' %} {% block content %}
+<h1>{% block title %}Tervetuloa!{% endblock %}</h1>
+
+<div>
+  <h5>
+    Tämä on ReKi, eli reseptikirja, johon voit ladata omat suosikkisi. Luo
+    käyttäjätili, niin pääset kokoamaan omaa reseptikirjaasi.
+  </h5>
+
+  <img src="../static/images/IMG_3305.tiff" alt="burger" />
+</div>
+
+
+<form method="POST" action="/feedback">
+  <div class="form-group"><p>
+    Voit antaa meille myös palautetta tai toiveita kehitettävistä
+    toiminnallisuuksista:
+  </p></div>
+  <div class="form-group">
+    <label for="email">Email:</label>
+    <input
+      type="email"
+      class="form-control"
+      id="email"
+      name="email"
+      placeholder="Syötä email-osoitteesi"
+    />
+  </div>
+  <div class="form-group">
+    <label for="palaute">Palaute:</label>
+    <textarea
+      type="palaute"
+      rows="5"
+      class="form-control"
+      id="palaute"
+      name="palaute"
+      placeholder="Kirjoita palautteesi"
+    ></textarea>
+  </div>
+  <br />
+  <button type="submit" class="btn btn-primary">Lähetä palaute</button>
+</form>
+{% endblock %}
