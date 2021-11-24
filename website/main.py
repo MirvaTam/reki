@@ -1,5 +1,5 @@
 from sqlite3.dbapi2 import connect
-from flask import Blueprint, render_template, request, flash
+from flask import Blueprint, render_template, request, flash, redirect
 from flask.helpers import url_for
 from flask_login import login_required, current_user
 from . import db
@@ -19,8 +19,13 @@ def profile():
     if request.method == 'POST':
         title = request.form.get('title')
         content = request.form.get('content')
+        comment = request.form.get('comment')
 
-        new_resepti = Reseptit(title=title, content=content, user_id=current_user.id)
+        #if not title or content or comment:
+         #   flash('Muista täyttää kaikki kentät')
+          #  return redirect(url_for('main.profile'))
+       
+        new_resepti = Reseptit(title=title, content=content, comment=comment, user_id=current_user.id)
         db.session.add(new_resepti)
         db.session.commit()
         flash('Resepti lisätty')
@@ -34,6 +39,19 @@ def reseptit():
     resepti = Reseptit.query.all()
 
     return render_template('reseptit.html', resepti=resepti, user=current_user, name=current_user.etunimi)
+
+@main.route('/delete', methods=['POST'])
+def delete():
+    if request.method == 'POST':
+       id = request.form.get('id')
+       delete = Reseptit.query.get(id)
+       db.session.delete(delete)
+       db.session.commit()
+       db.session.close()
+       flash('Respti onnistuneesti poistettu')
+       return redirect(url_for('main.profile'))
+    
+    return render_template('reseptit.html', user=current_user, name=current_user.etunimi)
 
 @main.route('/feedback', methods=['POST'])
 def feedback():

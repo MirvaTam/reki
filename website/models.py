@@ -7,7 +7,8 @@ class Reseptit(db.Model):
     __tablename__ = 'reseptit'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(1000))
-    content = db.Column(db.Text())
+    content = db.Column(db.String(1000))
+    comment = db.Column(db.String(1000))
     created = db.Column(db.DateTime(timezone=True), default=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
