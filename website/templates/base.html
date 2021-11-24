@@ -52,8 +52,8 @@
           {% endif %}
           {% if current_user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link" id="profile" href="{{url_for('main.profile')}}"
-              >Profiili</a>
+            <a class="nav-link" id="reseptit" href="{{url_for('main.reseptit')}}"
+              >Reseptit</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" id="logout" href="{{url_for('auth.logout')}}"

@@ -50,7 +50,8 @@ def sign_up_post():
     if user: # if a user is found, we want to redirect to login /or sigup/
         flash('Email on jo olemassa. Kirjaudu tästä sisään.')
         return redirect(url_for('auth.login'))
-    
+        
+    # create a new user with the form data
     new_user = Users(email=email, etunimi=etunimi, password=generate_password_hash(password, method='sha256'))
 
     # add the new user to the database

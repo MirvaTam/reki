@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}  Reseptit  {% endblock %}
+{% block content %}
+<h1 class="title">
+  Tervetuloa {{ name }}! <br> Tässä sinun reseptisi:
+</h1>
+
+<div class="container bg-dark text-white">
+<h3>Lisää uusi resepti</h3>
+
+   <form method="post" action="/profile">
+       <div class="form-group">
+           <label for="title"></label>
+           <input type="text" name="title"
+                  placeholder="Reseptin nimi" class="form-control"
+                  value="{{ request.form['title'] }}"></input>
+       </div>
+   
+       <div class="form-group">
+           <label for="content"></label>
+           <textarea name="content" placeholder="Ohjeet"
+                     class="form-control">{{ request.form['content'] }}</textarea>
+       </div>
+       <div class="form-group">
+           <button type="submit" class="btn btn-info">Lisää Resepti</button>
+       </div>
+       <label></label>
+   </form>
+  </div>
+
+   <div class="container">
+   <h2>Omat Reseptit</h2>
+
+   <ul class="list-group list-group-flush" id="reseptit">
+    {% for resepti in user.reseptit %}
+    <li class="list-group-item"><b>
+      {{ resepti.title }} </b>
+      <br>{{ resepti.created }}<p>
+      {{ resepti.content }}</p>
+      <a href="#">
+        <span class="badge badge-success">Muokkaa reseptiä</span>
+      </a>
+      <a href="#">
+        <span class="badge badge-dark">Poista resepti</span>
+      </a>
+    </li>
+    </ul>
+  </div>
+    {% endfor %}
+{% endblock %}

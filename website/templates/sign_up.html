@@ -1,18 +1,9 @@
 {% extends 'base.html' %} {% block content %}
-<h2>{% block title %} Sign Up {% endblock %}</h2>
-
-<h1>maybe...</h1>
-<!--{% with messages = get_flashed_messages() %}
-{% if messages %}
-    <div class="notification is-danger">
-        {{ messages[0] }}. Go to <a href="{{ url_for('auth.login') }}">login page</a>.
-    </div>
-{% endif %}
-{% endwith %}-->
+<h2>{% block title %} Luo käyttäjätili {% endblock %}</h2>
 <form method="POST" action="/sign_up">
-  <h3>Sign Up</h3>
+  
   <div class="form-group">
-    <label for="email">Email osoite</label>
+    <label for="email">Email</label>
     <input
       type="email"
       class="form-control"

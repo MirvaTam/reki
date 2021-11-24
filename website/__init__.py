@@ -5,6 +5,7 @@ from flask_login import LoginManager
 
 db = SQLAlchemy() # init the db so we can use this object in our models
 
+
 def create_app():
     app = Flask(__name__) ## perustaa koko sovelluksen
 
